@@ -91,7 +91,7 @@ A Deep Q Network is used based on the approach proposed in this [paper](https://
 2. Fixed Q-Targets: This is done by means of a second network (same architecture as the DQN) that is used as a target network and updated every n steps.
 
 ### Visual Model
-The model that is used when the state is represented by visual data (4x84x84x3 images) is defined in the file `model.py` using a succession of 3 convolutional layers, batch normalization, relu activations and 2 fully connected layers as follows:
+The model that is used when the state is represented by visual data (4x84x84x3 images) is defined in the file `model.py` using a succession of 3 convolutional layers, batch normalization, relu activations and 2 fully connected layers as follows (model parameters can be found in this [repo](https://github.com/yingweiy/drlnd_project1_navigation):
 
 ``` python
 class VisualQNetwork(nn.Module):
