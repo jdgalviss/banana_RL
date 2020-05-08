@@ -60,7 +60,7 @@ You need only select the environment that matches your operating system (Linux V
 Follow the instructions in `Navigation.ipynb` to visualize the environment.
 
 ### Train the agent
-Follow the `Train.ipynb` notebook to train an agent. Note that by changing the second cell's parameter `mode` you can choose between `visual` or `normal` operation so that the agent is trained either on the 37 state vector or on the 84x84x3 frontal images respectively. At the end, the agent will be trained until solving the task as shown in the following score vs. episodes plot:
+Follow the `Train.ipynb` notebook to train an agent. Note that by changing the second cell's parameter `mode` you can choose between `visual` or `normal` operation so that the agent is trained either on 84x84x3 frontal images or a 37 state vector respectively. At the end, the agent will be trained until solving the task as shown in the following score vs. episodes plot:
 
 Training on 37 elements vector:
 
@@ -128,3 +128,8 @@ class QNetwork(nn.Module):
         self.fc3 = nn.Linear(fc2_units, action_size)
 ```
 
+## Future Work
+Several techniques have been implemented to improve the performance of DeepQ-Learning, some of which could be implemented for this particular case are:
+* [Double DQN](https://arxiv.org/abs/1509.06461): In order to avoid over estimation of Q-values by having one network to select the best action from the target function and another one to evaluate it. This helps us to avoid the propagation of accidental high rewards. For example, we could use the network used in the fixed-q targets approach to evaluate actions.
+* [Prioritized Experience Replay](https://arxiv.org/abs/1511.05952): Instead of sampling randomly from the replay buffer, this approach suggests to take into account that some experiences might be more valueble (important or scarse). To define how important one experience is, we could store the TD Error for each step on the Replay Buffer and then sample based on its value.
+* [Dueling Networks](https://arxiv.org/abs/1511.06581): This technique proposes a new arquitecture where instead of only estimating the state-action value function Q(s,a), we estimate the state value function V(s) and advantage values A(s,a). Then the desired Q-Values are obtained by combaining V(s) and A(s,a). The intuition behind this is that the value of states don't vary a lot accross actions.
