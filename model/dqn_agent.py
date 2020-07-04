@@ -2,8 +2,8 @@ import numpy as np
 import random
 from collections import namedtuple, deque
 
-from model.model import QNetwork
-from model.model import VisualQNetwork
+from model import QNetwork
+from model import VisualQNetwork
 
 import torch
 import torch.nn.functional as F

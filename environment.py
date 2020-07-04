@@ -2,23 +2,25 @@ from unityagents import UnityEnvironment
 import numpy as np
 
 FILENAME = "Banana.x86_64"
+FOLDER_VISUAL = "VisualBanana_Linux"
+FOLDER_NORMAL = "Banana_Linux"
+
 class BananaEnvironment:
-    def __init__(self, env_folder, num_previous_frames = 3, train_mode = True):
+    def __init__(self, mode, num_previous_frames = 3, is_eval = False):
+        env_folder = FOLDER_NORMAL if (mode == 'normal') else FOLDER_VISUAL
         self.env_base = UnityEnvironment(file_name = env_folder + '/' +FILENAME)
         self.brain_name = self.env_base.brain_names[0]
         self.brain = self.env_base.brains[self.brain_name]
-        self.train_mode = train_mode
+        self.is_eval = is_eval
         self.nframes = num_previous_frames
         self.last_states = []
-        self.env_folder = env_folder
+        self.mode = mode
         self.reset()
-        if (env_folder == 'VisualBanana_Linux'):
-            self.state_size = self.state.shape
-        else:
-            self.state_size = len(self.state)
+        self.state_size = len(self.state) if (mode == 'normal') else self.state.shape 
+        
             
     def update_state(self):
-        if self.env_folder == 'VisualBanana_Linux':
+        if self.mode == 'visual':
             # state size is 1,84,84,3
             # Rearrange from NHWC to NCHW
             current_state = np.transpose(self.env_info.visual_observations[0], (0,3,1,2))[:,:,:,:]
@@ -35,7 +37,7 @@ class BananaEnvironment:
             self.state = self.env_info.vector_observations[0]
 
     def reset(self):
-        self.env_info = self.env_base.reset(train_mode=self.train_mode)[self.brain_name]
+        self.env_info = self.env_base.reset(train_mode=(not self.is_eval))[self.brain_name]
         self.update_state()
         return self.state
 

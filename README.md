@@ -27,8 +27,12 @@ The state space has 37 dimensions and contains the agent's velocity, along with 
 The task is episodic, and in order to solve the environment, the agent must get an average score of +13 over 100 consecutive episodes.
 
 ## Dependencies Installation
-Follow the instructions from the Udacity's DRLND [repository](https://github.com/udacity/deep-reinforcement-learning#dependencies)
+Follow the Dependencies installation instructions from the Udacity's DRLND [repository](https://github.com/udacity/deep-reinforcement-learning#dependencies).
 
+Additionally, in order to be able to visualize the training process in tensorboar, torchsummary, tensorboard and tenroboardX should be installed.
+``` bash
+pip install tensorboard torchsummary tensorboardX
+```
 ## Getting Started
 
 1. Download the environment from one of the links below.  You need only select the environment that matches your operating system (This repo already contains the unity agents versions for Linux):
@@ -60,7 +64,16 @@ You need only select the environment that matches your operating system (Linux V
 Follow the instructions in `Navigation.ipynb` to visualize the environment.
 
 ### Train the agent
-Follow the `Train.ipynb` notebook to train an agent. Note that by changing the second cell's parameter `mode` you can choose between `visual` or `normal` operation so that the agent is trained either on 84x84x3 frontal images or a 37 state vector respectively. At the end, the agent will be trained until solving the task as shown in the following score vs. episodes plot:
+In order to train the agent using the original state vector, execute:
+``` bash
+python3 main.py
+```
+In order to train the agent using the 84x84x3 images seen by the agent, execute:
+``` bash
+python3 main.py --mode="visual"
+```
+
+At the end, the agent will be trained until solving the task as shown in the following score vs. episodes plots:
 
 Training on 37 elements vector:
 
@@ -71,7 +84,17 @@ Training on pixels:
 ![ScoresVisual][image3]
 
 ### Test the agent
-Follow the `Evaluate.ipynb` notebook to watch the intelligent agent. Note that by changing the second cell's parameter `mode` you can choose between `visual` or `normal` which will use the corresponding model and pretrained weights. The results can be seen on the following 2 animations:
+In order to evaluate the agent's behavior using the original state vector, execute:
+``` bash
+python3 main.py --eval=True
+```
+In order to evaluate the agent's behavior using the 84x84x3 images seen by the agent, execute:
+
+``` bash
+python3 main.py --mode="visual" --eval=True
+```
+
+ The results can be seen on the following 2 animations:
 
 Normal DQN Agent
 
