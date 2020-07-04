@@ -40,10 +40,10 @@ def train(env, agent, mode, n_episodes=1000, max_t=1000, eps_start=1.0, eps_end=
         eps = max(eps_end, eps_decay*eps) # decrease epsilon
         print('\rEpisode {}\tAverage Score: {:.2f}'.format(i_episode, np.mean(scores_window)), end="")
         writer.add_scalar('Current_score', score, i_episode)
+        writer.add_scalar('AverageScore', np.mean(scores_window), i_episode)
 
         if i_episode % 100 == 0:
             print('\rEpisode {}\tAverage Score: {:.2f}'.format(i_episode, np.mean(scores_window)))
-            writer.add_scalar('AverageScore', np.mean(scores_window), i_episode)
         if np.mean(scores_window)>=goal_score:  # If environment, solved, save network weights
             print('\nEnvironment solved in {:d} episodes!\tAverage Score: {:.2f}'.format(i_episode-100, np.mean(scores_window)))
             torch.save(agent.qnetwork_local.state_dict(), 'checkpoints/checkpoint-{}.pth'.format(mode))
